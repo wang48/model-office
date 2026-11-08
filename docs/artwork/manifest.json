@@ -1,0 +1,50 @@
+[
+  {
+    "id": "deepseek",
+    "file": "page/assets/community/deepseek.webp",
+    "url": "https://raw.githubusercontent.com/SelinLee/ai-moe-atlas/39101acd3ae252359e75d0ad25dc653682a220af/public/collected/deep-whale-maid/delighted/preview.webp",
+    "sha256": "6f7703fd0642a7eb1cbd8946c4ff30823be23a2640592c993993638c08f5a310",
+    "collectedAt": "2026-11-05",
+    "modifications": "None; copied upstream preview bytes unchanged, displayed with CSS contain."
+  },
+  {
+    "id": "gpt",
+    "file": "page/assets/community/gpt.webp",
+    "url": "https://raw.githubusercontent.com/SelinLee/ai-moe-atlas/39101acd3ae252359e75d0ad25dc653682a220af/public/collected/zipzippipe-chatgpt/portrait/preview.webp",
+    "sha256": "adcc2e97edc91a112c15edfcd180ea64961c0d25fb7b253196ea83bda38cf08f",
+    "collectedAt": "2026-11-05",
+    "modifications": "None; copied upstream preview bytes unchanged, displayed with CSS contain."
+  },
+  {
+    "id": "claude",
+    "file": "page/assets/community/claude.webp",
+    "url": "https://raw.githubusercontent.com/SelinLee/ai-moe-atlas/39101acd3ae252359e75d0ad25dc653682a220af/public/collected/zipzippipe-claude/portrait/preview.webp",
+    "sha256": "d92adeca21da38cb26c390937869c458e9922e6d4d257852acc9873b4e679488",
+    "collectedAt": "2026-11-05",
+    "modifications": "None; copied upstream preview bytes unchanged, displayed with CSS contain."
+  },
+  {
+    "id": "gemini",
+    "file": "page/assets/community/gemini.webp",
+    "url": "https://raw.githubusercontent.com/SelinLee/ai-moe-atlas/39101acd3ae252359e75d0ad25dc653682a220af/public/collected/zipzippipe-gemini/portrait/preview.webp",
+    "sha256": "9219fc38ae3a6dee2b2db068bfa6b5d94c924ff0f9e532f1f1e7f05e23a8a4cc",
+    "collectedAt": "2026-11-05",
+    "modifications": "None; copied upstream preview bytes unchanged, displayed with CSS contain."
+  },
+  {
+    "id": "qwen",
+    "file": "page/assets/community/qwen.webp",
+    "url": "https://raw.githubusercontent.com/SelinLee/ai-moe-atlas/39101acd3ae252359e75d0ad25dc653682a220af/public/collected/zipzippipe-qwen/portrait/preview.webp",
+    "sha256": "9bc45e710063edbf61818c93696df5c19ad6fb6317a0e6af6f50ae43a601a00e",
+    "collectedAt": "2026-11-05",
+    "modifications": "None; copied upstream preview bytes unchanged, displayed with CSS contain."
+  },
+  {
+    "id": "kimi",
+    "file": "page/assets/community/kimi.webp",
+    "url": "https://raw.githubusercontent.com/SelinLee/ai-moe-atlas/39101acd3ae252359e75d0ad25dc653682a220af/public/collected/zipzippipe-kimi/portrait/preview.webp",
+    "sha256": "4389c27e97befc7fce944b7a19ab25c90c076066109fd6ae09f0840196a6aa1a",
+    "collectedAt": "2026-11-05",
+    "modifications": "None; copied upstream preview bytes unchanged, displayed with CSS contain."
+  }
+]

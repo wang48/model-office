@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>模型在干嘛 · 模型小屋</title>
+  <link rel="icon" href="assets/icon.svg"><link rel="stylesheet" href="style.css">
+  <script src="_magpie/bridge.js"></script><script src="model.js" defer></script><script src="app.js" defer></script>
+</head>
+<body>
+  <main>
+    <header><a class="brand" href="./index.html"><img src="assets/icon.svg" alt="">返回办公室<span>CHARACTER ATLAS</span></a><div class="header-actions"><span id="connection" class="pill">连接中</span><button id="motion" aria-pressed="false" title="暂停角色动画">暂停动画</button></div></header>
+    <section class="intro"><div><div class="eyebrow">一点灵感，一点可爱，一屋子 AI。</div><h1>今天，模型们也在认真生活<span> ✦</span></h1><p>来小屋坐坐，看看你的 AI 搭子们。</p></div><div class="house-note">模型小屋营业中 <span>♡</span><small>代码之外，也要好好休息。</small></div></section>
+    <section class="toolbar" aria-label="显示选项"><div class="tabs"><button data-view="house" aria-pressed="true">⌂ 模型小屋</button><button data-view="album" aria-pressed="false">✧ 角色图鉴</button></div><div class="filters"><label for="period">统计范围</label><select id="period"><option value="today">今天</option><option value="7d">近 7 天</option><option value="30d">近 30 天</option></select><button id="refresh">↻ 刷新</button></div></section>
+    <div id="notice" class="notice" role="status"></div>
+    <section id="stats" class="stats" aria-label="用量统计"></section>
+    <section class="section-title"><h2 id="section-title">小屋里的伙伴 <span>06</span></h2><label class="search">⌕ <input id="search" type="search" placeholder="找一位 AI 伙伴…" aria-label="搜索模型角色"></label></section>
+    <section id="residents" class="residents" aria-label="模型角色"></section><p id="empty" hidden>没有找到这位伙伴，试试模型名称。</p>
+    <section class="bottom-note"><span>✦</span><div><strong>每一个模型，都有自己的小宇宙。</strong><p>社区形象归原作者所有，署名见角色详情；动作是氛围动画。真实模式仅展示用量，不代表模型的实时工作状态。</p></div><button id="demo">体验演示</button></section>
+    <footer><span>模型在干嘛 <b>·</b> 灵感来自 <a href="https://github.com/magpie-community/plugins/tree/main/packages/agent-office" target="_blank" rel="noopener noreferrer">Agent 办公室（Agent Office）</a>。</span><span id="updated">等待连接</span></footer>
+  </main>
+  <dialog id="detail"><button id="close-detail" aria-label="关闭角色详情">×</button><div id="detail-content"></div></dialog>
+</body></html>

@@ -1,0 +1,10 @@
+{
+  "package": "magpie-page-model-office",
+  "name": "模型在干嘛",
+  "kind": "page",
+  "community": true,
+  "summary": {
+    "en": "Inspired by Agent Office. A local Agent office with community anime characters, four animated 3D models and privacy-preserving session states.",
+    "zh": "灵感来自 Agent 办公室（Agent Office）。用社区娘化角色展示本机 Agent 会话：四位动态 3D 伙伴、状态筛选与详情，仅显示脱敏活动快照。"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "archive": "chatgpt-adult.zip",
+  "archive_sha256": "8a60612be552fe8f36bde20e1686be6fc8d383db037705cf57bebfe503b2a29c",
+  "glb_sha256": "34f5fd42f6ef4f5648066856cd6ded80569e09a673335e989a6bd3b9beddc337",
+  "bytes": 25639876,
+  "meshes": 3,
+  "skins": 0,
+  "morph_targets": [
+    "Breath",
+    "Head_Nod",
+    "Head_Turn",
+    "Mouth_A",
+    "Mouth_I",
+    "Mouth_U"
+  ],
+  "source": "https://github.com/ningfangtianwai-pixel/ai-girls-3d",
+  "version": "v1.0.0",
+  "license": "CC-BY-4.0"
+}

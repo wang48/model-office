@@ -1,0 +1,19 @@
+node_modules/
+*.tgz
+.DS_Store
+coverage/
+page/live.js
+page/live.js.tmp
+
+# Large model assets are distributed in the install package, not Git.
+page/assets/models/*.vrm
+page/assets/models/*.glb
+# Local verification artifacts and research screenshots
+releases/
+docs/*.png
+docs/release/package-verification.json
+.env
+.env.*
+.npmrc
+*.tmp
+page/assets/models/*-data.js

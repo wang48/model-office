@@ -1,0 +1,19 @@
+{
+  "archive": "gemini.zip",
+  "archive_sha256": "ac311d9f16815ac952b4b20a456a2878e02fab34777325c7faa1afb16e03fd11",
+  "glb_sha256": "68f5425c219bb2ea019354d9bcd67d29ebe1cd98e3529013adfde0ce10a98ef6",
+  "bytes": 26277620,
+  "meshes": 3,
+  "skins": 0,
+  "morph_targets": [
+    "Breath",
+    "Head_Nod",
+    "Head_Turn",
+    "Mouth_A",
+    "Mouth_I",
+    "Mouth_U"
+  ],
+  "source": "https://github.com/ningfangtianwai-pixel/ai-girls-3d",
+  "version": "v1.0.0",
+  "license": "CC-BY-4.0"
+}

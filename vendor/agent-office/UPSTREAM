@@ -1,0 +1,3 @@
+
+Local change 2026-11-06: readers.mjs codex session_meta additionally recognizes
+payload.source.subagent.thread_spawn.parent_thread_id. No prompt fields added.

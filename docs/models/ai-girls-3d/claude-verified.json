@@ -1,0 +1,18 @@
+{
+  "archive": "claude-adult.zip",
+  "archive_sha256": "2b083d40f9004bc2a6785dfc602ba3c3a8301e12f05440b78ca2a0d550282a1a",
+  "glb_sha256": "b8070a76eca40800edee787395c4e007a7986d8214ef8557bcc4a11f27e1a33d",
+  "bytes": 29236140,
+  "meshes": 1,
+  "skins": 0,
+  "morph_targets": [
+    "Arm_L",
+    "Arm_R",
+    "Breath",
+    "Head_Nod",
+    "Head_Turn"
+  ],
+  "source": "https://github.com/ningfangtianwai-pixel/ai-girls-3d",
+  "version": "v1.0.0",
+  "license": "CC-BY-4.0"
+}
