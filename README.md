@@ -4,7 +4,15 @@ Magpie 的本地 Agent 会话观察插件。每个会话是一位伙伴，根据
 
 ## 使用
 
-在 Magpie 插件管理中添加本项目文件夹，或执行：
+通过 npm 安装已发布版本：
+
+```sh
+magpie plugin add magpie-page-model-office
+```
+
+[npm 包](https://www.npmjs.com/package/magpie-page-model-office) · [市场收录 PR](https://github.com/magpie-community/plugins/pull/874)
+
+也可在 Magpie 插件管理中添加已准备好模型资源的本项目文件夹，或执行：
 
 ```sh
 magpie plugin add /path/to/model-zai-gan-ma
@@ -78,7 +86,7 @@ npm pack --dry-run
 
 ## 发布状态
 
-当前首个公开版本为 `0.1.0`，npm 包名为 `magpie-page-model-office`。当前为上架准备版本，尚未发布 npm 或提交插件市场。已在 Magpie 原生宿主验证真实快照、示例、筛选、详情和四位 3D 角色加载；后续验收记录及未完成项见 `docs/release-audit.md`。Qwen / Kimi 仍保留原图，不能将本版描述为全角色骨骼 3D。
+首个公开版本 `magpie-page-model-office@0.1.0` 已发布到 npm。Magpie 市场收录已提交 PR #874，是否收录以维护者合并结果为准。已在 Magpie 原生宿主验证真实快照、示例、筛选、详情和四位 3D 角色加载；后续验收记录及未完成项见 `docs/release-audit.md`。Qwen / Kimi 仍保留原图，不能将本版描述为全角色骨骼 3D。
 
 ## 从源码恢复 3D 资源
 

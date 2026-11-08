@@ -49,3 +49,9 @@
 用户确定仓库名称 model-office，并授权初始化和推送到 https://github.com/wang48/model-office.git。0.4.x 为未公开的本地迭代编号。包名改为 magpie-page-model-office，重新执行 31 项测试通过；展示名称和运行逻辑未变。Git 排除大型生成模型数据及原始模型、会话快照、依赖及本地验收截图。npm 发布与市场收录另行进行。
 
 首次 Git 上传大型生成数据连续遇到 HTTP 408，已将其从 Git 初始提交移除。安装包仍含离线模型，README 提供带哈希的源码恢复流程。
+
+## npm 发布及市场申请（2026-11-08）
+
+`magpie-page-model-office@0.1.0` 已出现在 npm 官方注册表，登记的 SHA-1 为 `61ff8aa0376f77a52facdee0a6022e28799a70b3`。市场申请：https://github.com/magpie-community/plugins/pull/874 。提交申请不等于市场已收录。
+
+已使用独立 npm 缓存下载正式包，与本地发布包逐字节一致，SHA-256：`f30a68d11f98ce40ce2812723ac2b9bfd9bf093528474997ce364ccb07a0bf5e`。包含全部四模型和署名，未包含会话快照。
