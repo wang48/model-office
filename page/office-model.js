@@ -9,11 +9,19 @@
     const stale=zone==='work'&&age>(phase==='tool'?600000:480000);
     return {...s,phase,label:stale?'长时间无进展':label,zone,symbol,stale,character,age,identity:character?known?'按模型匹配':'按 Agent 暂配':'未收录模型'};
   }
+  function sessions(records){
+    const latest=new Map();
+    for(const s of records||[]){const old=latest.get(s.key);if(!old||(Number(s.updated)||0)>(Number(old.updated)||0))latest.set(s.key,s);}
+    return [...latest.values()];
+  }
+  function historical(s,now=Date.now()){
+    return ['done','aborted','unknown'].includes(s.phase)&&Number(s.updated)>0&&now-s.updated>300000;
+  }
   function demo(tick=0,now=Date.now()){
     const modes=['thinking','tool','approval','done','replying','error'];
     return {written:now,text:false,sessions:ModelHouse.characters.map((c,i)=>({key:`demo-${c.id}`,agent:['dsh','claude','codex','gemini','qwen','kimi'][i],model:c.id+'-demo',phase:modes[(i+tick)%modes.length],step:'Read',updated:now-4000,started:now-90000,tokensToday:2000*(i+1),turnsToday:i+1,source:'demo'})).concat([
       {key:'demo-child-1',parentKey:'demo-claude',subagent:true,agent:'codex',model:'gpt-demo',phase:'tool',step:'Read',updated:now,source:'demo'},
       {key:'demo-child-2',parentKey:'demo-claude',subagent:true,agent:'gemini',model:'gemini-demo',phase:'thinking',updated:now,source:'demo'}])};
   }
-  globalThis.ModelOffice={phases,resident,demo};
+  globalThis.ModelOffice={phases,resident,demo,sessions,historical};
 })();

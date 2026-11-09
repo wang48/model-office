@@ -126,7 +126,7 @@
           w.body.position.y=walking?Math.abs(Math.sin(time*9))*.1:work?Math.sin(time*(phase==='thinking'?2:7))*.075:Math.sin(time*2)*.018;
           if(w.original){w.portrait.material.rotation=phase==='thinking'?Math.sin(time*2)*.045:phase==='approval'||phase==='ask'?Math.sin(time*4)*.07:Math.sin(time*7)*.018;w.body.position.x=phase==='error'?Math.sin(time*13)*.045:0;}
           // The original file is shared; each session has an independent display transform.
-          if(w.original)w.body.rotation.z=phase==='thinking'?Math.sin(time*2)*.045:phase==='approval'||phase==='ask'?Math.sin(time*4)*.07:0;
+          w.body.rotation.z=phase==='thinking'?Math.sin(time*2)*.045:phase==='approval'||phase==='ask'?Math.sin(time*4)*.07:work?Math.sin(time*3)*.025:Math.sin(time*1.2)*.015;
           w.head.rotation.z=phase==='thinking'?Math.sin(time*2)*.22:work?Math.sin(time*6)*.07:0;
           w.arms.forEach((arm,i)=>{const side=i?1:-1;arm.rotation.z=0;arm.rotation.x=0;
             if(walking){arm.rotation.x=Math.sin(time*9+i*Math.PI)*.55;}

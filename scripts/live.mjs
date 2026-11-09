@@ -1,8 +1,8 @@
-import {createActivity} from '../lib/activity.mjs';
+import {createAsyncActivity} from '../lib/async-activity.mjs';
 import {createLiveServer} from '../lib/server.mjs';
-const activity=createActivity();
+const activity=createAsyncActivity();
 if(process.argv.includes('--json')){
-  console.log(JSON.stringify(activity.snapshot()));
+  try{console.log(JSON.stringify(await activity.snapshot()));}finally{activity.close();}
 }else{
   const {server,prefix}=createLiveServer(activity);
   server.on('error',e=>{console.error(`无法启动本地办公室：${e.message}`);process.exitCode=1;});

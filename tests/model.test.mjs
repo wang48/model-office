@@ -21,7 +21,9 @@ test('演示不同时间范围总量与明细一致',()=>{
 });
 test('插件权限、页面入口、离线资源与 CSP 限制一致',()=>{
   const pkg=JSON.parse(readFileSync(new URL('../package.json',import.meta.url)));
-  assert.deepEqual(pkg.magpie.permissions,['usage:summary']);
+  assert.deepEqual(pkg.magpie.permissions,[]);
+  assert.equal(pkg.magpie.hooks,undefined);
+  assert.equal(pkg.main,'./index.mjs');
   assert.ok(existsSync(new URL('../'+pkg.magpie.page.file,import.meta.url)));
   for(const c of M.characters)assert.ok(existsSync(new URL(`../page/${c.image}`,import.meta.url)));
   const app=readFileSync(new URL('../page/app.js',import.meta.url),'utf8');

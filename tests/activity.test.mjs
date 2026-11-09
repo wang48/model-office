@@ -55,3 +55,25 @@ test('Codex 子代理元数据连接到匿名父会话，不公开原始 ID',()=
   assert.equal(exposed.parentKey,parent.key);assert.ok(!JSON.stringify(exposed).includes('private'));
   assert.equal(publicSession({agent:'codex',subagent:false,parent:'parent-private'}).parentKey,'');
 });
+
+test('同一会话的旧副本不能覆盖较新事件，即使旧文件刚被复制',async()=>{
+  const {latestSessions}=await import('../lib/activity.mjs');
+  const active={key:'codex|same',agent:'codex',phase:'tool',updated:2000,touched:2000};
+  const old={...active,phase:'aborted',updated:1000,touched:9000};
+  for(const input of [[active,old],[old,active]]){
+    const result=latestSessions(input);assert.equal(result.length,1);assert.equal(result[0].phase,'tool');
+    const publicRows=result.map(publicSession);assert.equal(publicRows[0].updated,2000);
+  }
+  assert.equal(publicSession(old).updated,1000);
+  assert.equal(latestSessions([active,{...active,key:'codex|other'}]).length,2);
+});
+test('前端兼容旧快照去重；历史过滤保留当前工作和需要处理的状态',()=>{
+  const now=1000000;
+  const newer={key:'a',phase:'tool',updated:now};
+  const older={key:'a',phase:'aborted',updated:now-400000};
+  assert.deepEqual(ModelOffice.sessions([newer,older]),[newer]);
+  for(const phase of ['done','aborted','unknown'])assert.equal(ModelOffice.historical({phase,updated:now-400000},now),true);
+  for(const phase of ['tool','thinking','replying','approval','ask','error'])assert.equal(ModelOffice.historical({phase,updated:now-400000},now),false);
+  assert.equal(ModelOffice.historical({phase:'done',updated:now-1000},now),false);
+  assert.equal(publicSession({phase:'done',stepName:'old-tool'}).step,'');
+});

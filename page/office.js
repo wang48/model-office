@@ -2,20 +2,21 @@
   const $=id=>document.getElementById(id), O=ModelOffice;
   let world=null,dimension='3d',sceneError='',listSignature='',returnKey=null;
   const motionPreference=matchMedia('(prefers-reduced-motion: reduce)');
-  let snapshot=null,demo=false,cycle=0,selected=null,detailSignature='',filter='all',lastSuccess=0,loading=false;
+  let snapshot=null,demo=false,cycle=0,selected=null,detailSignature='',filter='all',lastSuccess=0,loading=false,showHistory=false;
   const make=(tag,cls,text)=>{const e=document.createElement(tag);e.className=cls;if(text!==undefined)e.textContent=text;return e;};
-  function rows(){return (snapshot?.sessions||[]).map(s=>O.resident(s)).filter(s=>filter==='all'||s.zone===filter).filter(s=>`${s.agent} ${s.model} ${s.label} ${s.character?.name||''}`.toLowerCase().includes($('office-search').value.toLowerCase()));}
+  function currentSessions(){return O.sessions(snapshot?.sessions).filter(s=>demo||showHistory||!O.historical(s));}
+  function rows(){return currentSessions().map(s=>O.resident(s)).filter(s=>filter==='all'||s.zone===filter).filter(s=>`${s.agent} ${s.model} ${s.label} ${s.character?.name||''}`.toLowerCase().includes($('office-search').value.toLowerCase()));}
   function modelState(s){const w=world?.workers.get(s.key);return w?.vrm?'骨骼 3D 动画':w?.glb?'3D 形态键动画':w?.loading?'3D 模型加载中':w?.modelError?'3D 加载失败，当前显示原画':'作者原图';}
   function closeDetails(){selected=null;$('inspector').close();}
   function toggleDemo(){demo=!demo;closeDetails();snapshot=demo?O.demo():null;paint();if(!demo)load();}
-  function setPaused(paused){document.body.classList.toggle('paused',paused);$('pause').textContent=paused?'恢复动画':'暂停动画';$('pause').setAttribute('aria-pressed',String(paused));world?.pause(paused);}
+  function setPaused(paused){document.body.classList.toggle('paused',paused);$('pause').textContent=paused?'恢复动画':'暂停动画';$('pause').setAttribute('aria-pressed',String(paused));world?.pause(paused);paint();}
   function details(s){
     if(!$('inspector').open)returnKey=s.key;
     selected=s.key;detailSignature=JSON.stringify({...s,age:0,updated:0,modelState:modelState(s)});const b=$('session-detail');b.replaceChildren();
     if(s.character){const img=make('img','detail-art');img.src=s.character.originalImage||s.character.image;img.alt=s.character.alias;b.append(img);}
     b.append(make('div','eyebrow',s.agent.toUpperCase()),make('h2','',s.character?.alias||s.model||'未识别模型'),make('p','phase-label',`${s.symbol} ${s.label}`));
     b.querySelector('h2').id='detail-title';
-    for(const [name,value] of [['模型',s.model||'日志未记录'],['会话',s.key.slice(0,10)],['身份',s.subagent?'子代理':'主会话'],['形象资源',modelState(s)],...(s.subagent?[['父会话',s.parentKey?s.parentKey.slice(0,10):'日志未记录']]:[]),['当前工具',s.step||'—'],['今日轮次',s.turnsToday||0],['今日 Token',ModelHouse.count(s.tokensToday)],['来源',demo?'演示数据':'本机会话文件'],['角色映射',s.identity]]){
+    for(const [name,value] of [['模型',s.model||'日志未记录'],['会话',s.key.slice(0,10)],['身份',s.subagent?'子代理':'主会话'],['形象资源',modelState(s)],...(s.subagent?[['父会话',s.parentKey?s.parentKey.slice(0,10):'日志未记录']]:[]),['当前工具',['tool','approval','ask'].includes(s.phase)?s.step||'—':'—'],['最后事件',s.updated?new Date(s.updated).toLocaleString('zh-CN'):'未知'],['今日轮次',s.turnsToday||0],['今日 Token',ModelHouse.count(s.tokensToday)],['来源',demo?'演示数据':'本机会话文件'],['角色映射',s.identity]]){
       const p=make('p','detail-row');p.append(make('span','',name),make('strong','',value));b.append(p);
     }
     b.append(make('p','detail-note','只显示状态与工具名；请回到原 Agent 处理批准、回答或错误。'));
@@ -26,10 +27,13 @@
     if(!$('inspector').open){$('inspector').showModal();$('close-inspector').focus();}
   }
   function paint(){
-    const all=(snapshot?.sessions||[]).map(s=>O.resident(s));
+    const all=currentSessions().map(s=>O.resident(s));
+    const historyCount=O.sessions(snapshot?.sessions).filter(s=>O.historical(s)).length;
+    $('history').textContent=showHistory?'隐藏历史':`显示历史${historyCount?' ('+historyCount+')':''}`;
     const stale=!demo&&(!lastSuccess||Date.now()-lastSuccess>12000||Date.now()-(snapshot?.written||0)>12000);
     $('connection').textContent=demo?'◌ 演示模式':stale?'○ 等待宿主':'● 本机实时';
-    $('office-notice').textContent=demo?'演示场景 · 每 8 秒轮换状态，数字与会话均为示例。':stale?(snapshot?'连接暂时中断，当前显示上次快照。':'等待连接 Magpie。也可以先查看示例办公室。'):'仅在本机读取会话状态 · 不展示对话正文';
+    $('office-notice').textContent=demo?'演示场景 · 每 8 秒轮换状态，数字与会话均为示例。':stale?(snapshot?'连接暂时中断，当前显示上次快照。':'等待连接 Magpie。也可以先查看示例办公室。'):'按本机日志更新状态 · 已结束超过 5 分钟的会话默认隐藏';
+    if(document.body.classList.contains('paused'))$('office-notice').textContent+=' · 动画已暂停，可点击「恢复动画」';
     if(sceneError)$('office-notice').textContent+=' · 3D 暂不可用，已切换 2D。';
     $('connection').dataset.state=demo?'demo':stale?'waiting':'live';
     $('toggle-demo').textContent=demo?'返回真实会话':'查看示例';
@@ -59,7 +63,7 @@
     if(selected){const s=all.find(s=>s.key===selected);if(s){if(JSON.stringify({...s,age:0,updated:0,modelState:modelState(s)})!==detailSignature)details(s);}else{closeDetails();}}
   }
   function load(){
-    if(demo||loading)return;loading=true;
+    if(demo||loading||document.hidden)return;loading=true;
     const script=document.createElement('script');script.src=`live.js?t=${Date.now()}`;
     const timeout=setTimeout(()=>done(false),5000);let finished=false;
     function done(ok){if(finished)return;finished=true;clearTimeout(timeout);script.remove();loading=false;
@@ -74,6 +78,7 @@
   $('office-search').addEventListener('input',paint);
   $('close-inspector').addEventListener('click',closeDetails);
   $('inspector').addEventListener('close',()=>{selected=null;const opener=[...document.querySelectorAll('[data-session-key]')].find(b=>b.dataset.sessionKey===returnKey);(opener||$('office-search')).focus();returnKey=null;});
+  $('history').addEventListener('click',()=>{showHistory=!showHistory;$('history').setAttribute('aria-pressed',String(showHistory));paint();});
   $('pause').addEventListener('click',()=>setPaused(!document.body.classList.contains('paused')));
   motionPreference.addEventListener('change',e=>setPaused(e.matches));
   $('view-list').addEventListener('click',()=>{const list=document.body.classList.toggle('list-view');$('view-list').textContent=list?'切回办公室':'列表视图';$('view-list').setAttribute('aria-pressed',String(list));});
@@ -94,6 +99,7 @@
   // Explicit demo only. A standalone preview starts empty, just like Agent Office.
   if(globalThis.magpie)Promise.resolve(magpie.ready).catch(()=>{});
   setPaused(motionPreference.matches);
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden)load();});
   paint();load();setInterval(()=>{if(!document.hidden)load();},1500);
   setInterval(()=>{if(demo&&!document.body.classList.contains('paused')){snapshot=O.demo(++cycle);paint();}},8000);
 })();

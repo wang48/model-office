@@ -4,3 +4,5 @@
 
 /* Community art is displayed whole: no cropping or background removal. */
 .scene{height:325px}.character{width:100%;height:274px;object-fit:contain;max-width:100%;animation-name:community-breathe}.portrait{height:380px;object-fit:contain}.card-info .art-credit{font-size:9px;line-height:1.5;min-height:14px;color:var(--muted)}.source-link{color:var(--ink);text-underline-offset:4px}.deepseek .character{width:245px;height:255px}.bubble{top:12px}.floor{display:none}@keyframes community-breathe{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}@media(max-width:540px){.scene{height:345px}.character{height:290px}.portrait{height:330px}}
+
+:root[data-theme=dark]{color-scheme:dark;--bg:#20291f;--paper:#20291f;--surface:#293329;--ink:#e4ebde;--muted:#a5b19e;--border:#4b5946;--line:#4b5946;--soft:#354131}

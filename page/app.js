@@ -1,7 +1,6 @@
 (() => {
   const M=globalThis.ModelHouse, $=id=>document.getElementById(id);
-  const host=globalThis.magpie;
-  let demo=!host, period='today', view='house', summary=null, error='', busy=false, revision=0, options={}, saveTimer, selected=null;
+  let demo=true, period='today', view='house', summary=null, error='', busy=false, revision=0, options={}, saveTimer, selected=null;
   const node=(tag,cls,text)=>{const e=document.createElement(tag);e.className=cls;if(text!==undefined)e.textContent=text;return e;};
   function showDetail(c) {
     selected=c.id;
@@ -45,7 +44,7 @@
   async function load() {
     const own=++revision;busy=true;$('refresh').disabled=true;
     try {
-      const raw=demo?M.fixture(period):await host.read('usage:summary',{period});
+      const raw=M.fixture(period);
       if(own!==revision)return;
       summary=M.summarize(raw);error='';$('updated').textContent=`${demo?'演示更新':'最近同步'} ${new Date().toLocaleTimeString('zh-CN')}`;
     } catch(e) {if(own!==revision)return;summary=null;error=`读取失败：${e.message||e}。可以点击刷新重试，或体验演示。`;$('updated').textContent='同步失败';}
@@ -53,16 +52,11 @@
   }
   $('search').addEventListener('input',paint);
   $('refresh').addEventListener('click',load);
-  $('period').addEventListener('change',()=>{period=$('period').value;load();if(host){clearTimeout(saveTimer);saveTimer=setTimeout(async()=>{try{options=await host.options.set({...options,period});}catch{$('updated').textContent='范围已切换，但偏好保存失败';}},1200);}});
+  $('period').addEventListener('change',()=>{period=$('period').value;load();});
   document.querySelectorAll('[data-view]').forEach(button=>button.addEventListener('click',()=>{view=button.dataset.view;document.querySelectorAll('[data-view]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));paint();}));
-  $('demo').addEventListener('click',()=>{demo=host?!demo:true;summary=null;load();});
+  $('demo').addEventListener('click',()=>{demo=true;summary=null;load();});
   $('motion').addEventListener('click',()=>{const paused=document.body.classList.toggle('paused');$('motion').setAttribute('aria-pressed',String(paused));$('motion').textContent=paused?'恢复动画':'暂停动画';});
   $('close-detail').addEventListener('click',()=>$('detail').close());
   $('detail').addEventListener('click',e=>{if(e.target===$('detail')){const r=e.target.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)e.target.close();}});
-  async function start(){
-    paint();
-    if(host){try{await Promise.race([host.ready,new Promise((_,reject)=>setTimeout(()=>reject(new Error('Magpie 桥接连接超时')),10000))]);options=await host.options.get()||{};if(['today','7d','30d'].includes(options.period))period=options.period;$('period').value=period;}catch(e){error=e.message;paint();return;}}
-    await load();setInterval(()=>{if(!document.hidden&&!busy&&!demo)load();},60000);
-  }
-  start();
+  paint();load();
 })();

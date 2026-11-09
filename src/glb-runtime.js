@@ -51,8 +51,8 @@ function animate(model, phase, time) {
   const speaking = phase === 'replying';
   const values = {
     Breath: .35 + .3 * Math.sin(time * 2),
-    Head_Nod: (.5 + .5 * Math.sin(time * (speaking ? 3 : 1.3))) * (phase === 'done' ? .6 : .2),
-    Head_Turn: (.5 + .5 * Math.sin(time * .9)) * (phase === 'thinking' ? .55 : .2),
+    Head_Nod: (.5 + .5 * Math.sin(time * (speaking ? 3 : 1.6))) * (phase === 'tool' || speaking ? .65 : .4),
+    Head_Turn: (.5 + .5 * Math.sin(time * .9)) * (phase === 'thinking' ? .75 : .35),
     Arm_L: phase === 'tool' ? .25 + .2 * Math.sin(time * 4) : 0,
     Arm_R: phase === 'approval' || phase === 'ask' ? .6 + .2 * Math.sin(time * 3) : 0,
     Mouth_A: speaking ? .3 * Math.max(0, Math.sin(time * 8)) : 0,

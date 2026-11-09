@@ -37,3 +37,13 @@ for(const id of ['claude','gpt','gemini']){
     assert.ok(after.every(v=>Number.isFinite(v)&&v>=0&&v<=1));
   });
 }
+
+test('工作形态键的可见动作幅度大于待机，切换状态不会残留手臂动作',()=>{
+  const names=['Head_Nod','Head_Turn','Breath','Arm_L','Arm_R'];
+  const mesh={morphTargetDictionary:Object.fromEntries(names.map((n,i)=>[n,i])),morphTargetInfluences:names.map(()=>0)};
+  const model={morphs:[mesh]};let work=[],rest=[];
+  for(let i=0;i<40;i++){ModelGLB.animate(model,'tool',i/10);work.push(mesh.morphTargetInfluences[0]);ModelGLB.animate(model,'done',i/10);rest.push(mesh.morphTargetInfluences[0]);}
+  assert.ok(Math.max(...work)-Math.min(...work)>.5);
+  assert.ok(Math.max(...work)-Math.min(...work)>Math.max(...rest)-Math.min(...rest));
+  assert.equal(mesh.morphTargetInfluences[3],0);assert.equal(mesh.morphTargetInfluences[4],0);
+});

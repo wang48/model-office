@@ -1,13 +1,12 @@
 {
   "name": "magpie-page-model-office",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "模型在干嘛：以社区拟人角色展示本机 Agent 会话状态的实时 3D 办公室",
   "type": "module",
   "license": "MIT",
   "files": [
     "page",
     "lib",
-    "office.hooks.mjs",
     "vendor/agent-office/lib/readers.mjs",
     "vendor/agent-office/lib/scan.mjs",
     "vendor/agent-office/LICENSE",
@@ -18,7 +17,10 @@
     "docs/artwork",
     "docs/references.md",
     "docs/models",
-    "ACKNOWLEDGEMENTS.md"
+    "ACKNOWLEDGEMENTS.md",
+    "index.mjs",
+    "src",
+    "scripts/build-vrm.mjs"
   ],
   "keywords": [
     "magpie-plugin",
@@ -29,7 +31,7 @@
   "scripts": {
     "dev": "node scripts/preview.mjs",
     "test": "node --test tests/*.test.mjs",
-    "check": "node --check page/scene3d.js && node --check page/office.js && node --check page/office-model.js && node --check office.hooks.mjs && node --test tests/*.test.mjs",
+    "check": "node --check index.mjs && node --check page/boot.js && node --check page/office.js && node --check page/scene3d.js && node --check lib/server.mjs && node --test tests/*.test.mjs",
     "live": "node scripts/live.mjs",
     "build:vrm": "node scripts/build-vrm.mjs"
   },
@@ -37,21 +39,18 @@
     "name": "模型在干嘛",
     "page": {
       "title": "模型在干嘛",
-      "file": "page/index.html",
+      "file": "page/boot.html",
       "icon": "page/assets/icon.svg"
     },
-    "permissions": [
-      "usage:summary"
-    ],
+    "permissions": [],
     "options": {
-      "period": "today"
-    },
-    "hooks": "./office.hooks.mjs"
+      "port": 4174
+    }
   },
   "devDependencies": {
-    "@pixiv/three-vrm": "^3.5.5",
-    "esbuild": "^0.28.2",
-    "three": "^0.169.0"
+    "@pixiv/three-vrm": "3.5.5",
+    "esbuild": "0.28.2",
+    "three": "0.169.0"
   },
   "repository": {
     "type": "git",
@@ -60,5 +59,6 @@
   "homepage": "https://github.com/wang48/model-office#readme",
   "bugs": {
     "url": "https://github.com/wang48/model-office/issues"
-  }
+  },
+  "main": "./index.mjs"
 }
